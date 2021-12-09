@@ -19,6 +19,11 @@ python3 -m pip install -r requirements.txt
 ``` bash
 python3 bot.py
 ```
+## Запуск тестов
+``` bash
+python3 tests.py
+```
+
 
 &copy; Все права защищены. Данный бот выполнен студентами 1-ого курса БИБ-211
 
