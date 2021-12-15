@@ -200,6 +200,9 @@ def convert(message, pair) -> None:
     except:
         bot.send_message(message.chat.id, 'Ошибка в вводе! 🙁\nПожалуйста, проверьте правильность введеных данных и повторите попытку!', reply_markup=get_main_keyboard())
 
-        
+@bot.message_handler()
+def garbage(message):
+    bot.send_message(message.chat.id, 'Я пока не знаю, как на такое реагировать! 🥺')
+
 bot.polling()
 
