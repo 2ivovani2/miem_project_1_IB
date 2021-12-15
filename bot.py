@@ -3,12 +3,10 @@ from forex_python.converter import CurrencyRates
 import requests as r
 from PIL import Image
 from io import BytesIO
+from const import TOKEN, COMMANDS
 
 
-TOKEN = ''
 bot = telebot.TeleBot(TOKEN, parse_mode='html')
-
-COMMANDS = ['start', 'convert', 'get_coffee_picture', 'update_math_skills','get_smart_quote','shakal_picture']
 
 
 @bot.message_handler(commands=COMMANDS)
@@ -40,35 +38,15 @@ def start_message(message) -> None:
     else:
         bot.send_message(message.chat.id, "Пока что я не знаю, как на такое реагировать!🥺")
 
-
-@bot.message_handler(content_types=['text'])
+@bot.message_handler(content_types=['text'], regexp='начал')
 def text_processing(message) -> None:
     '''
         Функция обработки обыного текста от пользователя
     '''
+
+    keyboard = get_main_keyboard()
+    bot.send_message(message.chat.id, 'Добро пожаловать обратно в главное меню 😵‍💫', reply_markup=keyboard)
     
-    if 'конвертировать' in message.text.lower():
-        ask_for_pair(message)
-
-    elif 'кофе' in message.text.lower():
-        get_coffee_picture(message)
-
-    elif 'решить' in message.text.lower() or 'пример' in message.text.lower() or 'матан' in message.text.lower():
-        update_math_skills(message)
-
-    elif 'цитат' in message.text.lower() or 'поумничать' in message.text.lower():
-        get_smart_quote(message)
-
-    elif 'начал' in message.text.lower():
-        keyboard = get_main_keyboard()
-        bot.send_message(message.chat.id, 'Добро пожаловать обратно в главное меню 😵‍💫', reply_markup=keyboard)
-
-    elif 'подшаман' in message.text.lower() or 'шакалить' in message.text.lower():
-        ask_for_photo(message)
-
-    else:
-        bot.send_message(message.chat.id, "Пока что я не знаю, как на такое реагировать!🥺")
-
 def get_main_keyboard() -> telebot.types.ReplyKeyboardMarkup:
     '''
         Функция, возвращающая главные кнопки нашего бота
@@ -81,11 +59,20 @@ def get_main_keyboard() -> telebot.types.ReplyKeyboardMarkup:
 
     return main_keyboard
 
+@bot.message_handler(content_types=['text'], regexp='подшаман|шакалить')
 def ask_for_photo(message) -> None:
+    '''
+        Функция получения картинки от юзера
+    '''
+
     bot.send_message(message.chat.id, f'Отправьте картинку, которую надо зашакалить Ꮗ')
     bot.register_next_step_handler(message, picture_magic)
 
 def picture_magic(message):
+    '''
+        Функция шакалинга картинки
+    '''
+
     keyboard = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True)
     keyboard.row('Хочу шакалить еще🧐', 'Хочу в начало 🥱')
     
@@ -101,7 +88,7 @@ def picture_magic(message):
     except:
         bot.send_message(message.chat.id, f'Сказали же картинку, а не что-то неясное ⑀', reply_markup=keyboard)
         
-
+@bot.message_handler(content_types=['text'], regexp='цитат|поумничать')
 def get_smart_quote(message) -> None:
     '''
         С помощью данной функции пользователь может получить умную цитатку
@@ -124,7 +111,7 @@ def get_smart_quote(message) -> None:
     else:
         bot.send_message(message.chat.id, 'Во время обращения к API произошла ошибка, пожалуйста, попробуйте позже 🥲', reply_markup=get_main_keyboard())
 
-
+@bot.message_handler(content_types=['text'], regexp='матан|решить|пример')
 def update_math_skills(message) -> None:
     '''
         Функция реализующая прокачку математический скиллов пользователя
@@ -164,6 +151,7 @@ def check_math_answer(message, answer) -> None:
     except:
         bot.send_message(message.chat.id, 'Похоже, что вы вводите не число!🥲\nПопробуем еще разик?', reply_markup=keyboard)
 
+@bot.message_handler(content_types=['text'], regexp='кофе')
 def get_coffee_picture(message) -> None:
     '''
         Функция, возвращающая рандомную картинку кофе
@@ -183,6 +171,7 @@ def get_coffee_picture(message) -> None:
     else:
         bot.send_message(message.chat.id, 'Во время обращения к API произошла ошибка, пожалуйста, попробуйте позже 🥲', reply_markup=get_main_keyboard())
 
+@bot.message_handler(content_types=['text'], regexp='конвертировать')
 def ask_for_pair(message) -> None:
     '''
         Функция, на которой мы страшиваем у пользователя валютную пару.
