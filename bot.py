@@ -3,7 +3,7 @@ from forex_python.converter import CurrencyRates
 import requests as r
 from PIL import Image
 from io import BytesIO
-from const import TOKEN, COMMANDS
+from const import TOKEN
 
 
 bot = telebot.TeleBot(TOKEN, parse_mode='html')
