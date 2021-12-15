@@ -15,7 +15,12 @@ cd miem_project_1_IB
 ``` bash
 python3 -m pip install -r requirements.txt
 ```
-4) Запускаем
+4) Необходимо создать файл `const.py` в корневой директории с таким содеражнием
+``` python
+TOKEN = '<ваш токен>'
+COMMANDS = ['start', 'convert', 'get_coffee_picture', 'update_math_skills','get_smart_quote','shakal_picture']
+```
+5) Запускаем
 ``` bash
 python3 bot.py
 ```
