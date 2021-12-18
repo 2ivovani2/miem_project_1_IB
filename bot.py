@@ -38,7 +38,8 @@ def get_main_keyboard() -> telebot.types.ReplyKeyboardMarkup:
 
     return main_keyboard
 
-@bot.message_handler(commands=['/shakal_picture'],content_types=['text'], regexp='подшаман|шакалить')
+@bot.message_handler(commands=['/shakal_picture'])
+@bot.message_handler(content_types=['text'], regexp='подшаман|шакалить')
 def ask_for_photo(message) -> None:
     '''
         Функция получения картинки от юзера
@@ -67,7 +68,8 @@ def picture_magic(message):
     except:
         bot.send_message(message.chat.id, f'Сказали же картинку, а не что-то неясное ⑀', reply_markup=keyboard)
         
-@bot.message_handler(commands=['/get_smart_quote'],content_types=['text'], regexp='цитат|поумничать')
+@bot.message_handler(commands=['/get_smart_quote'])
+@bot.message_handler(content_types=['text'], regexp='цитат|поумничать')
 def get_smart_quote(message) -> None:
     '''
         С помощью данной функции пользователь может получить умную цитатку
@@ -90,7 +92,8 @@ def get_smart_quote(message) -> None:
     else:
         bot.send_message(message.chat.id, 'Во время обращения к API произошла ошибка, пожалуйста, попробуйте позже 🥲', reply_markup=get_main_keyboard())
 
-@bot.message_handler(commands=['/update_math_skills'],content_types=['text'], regexp='матан|решить|пример')
+@bot.message_handler(commands=['/update_math_skills'])
+@bot.message_handler(content_types=['text'], regexp='матан|решить|пример')
 def update_math_skills(message) -> None:
     '''
         Функция реализующая прокачку математический скиллов пользователя
@@ -130,7 +133,8 @@ def check_math_answer(message, answer) -> None:
     except:
         bot.send_message(message.chat.id, 'Похоже, что вы вводите не число!🥲\nПопробуем еще разик?', reply_markup=keyboard)
 
-@bot.message_handler(commands=['/get_coffee_picture'],content_types=['text'], regexp='кофе')
+@bot.message_handler(commands=['/get_coffee_picture'])
+@bot.message_handler(content_types=['text'], regexp='кофе')
 def get_coffee_picture(message) -> None:
     '''
         Функция, возвращающая рандомную картинку кофе
@@ -150,7 +154,8 @@ def get_coffee_picture(message) -> None:
     else:
         bot.send_message(message.chat.id, 'Во время обращения к API произошла ошибка, пожалуйста, попробуйте позже 🥲', reply_markup=get_main_keyboard())
 
-@bot.message_handler(commands=['/convert'],content_types=['text'], regexp='конвертировать')
+@bot.message_handler(commands=['/convert'])
+@bot.message_handler(content_types=['text'], regexp='конвертировать')
 def ask_for_pair(message) -> None:
     '''
         Функция, на которой мы страшиваем у пользователя валютную пару.
