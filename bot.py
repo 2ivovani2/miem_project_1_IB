@@ -117,6 +117,7 @@ def update_math_skills(message) -> None:
 def check_math_answer(message, answer) -> None:
     '''
         Функция проверки ответа пользовтеля по математической операции
+        @answer: str - параметр, с ответом пользователя на пример
     '''
     
     keyboard = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True)
@@ -171,7 +172,7 @@ def ask_for_pair(message) -> None:
 
 def prep_pair(message) -> None:
     '''
-        Функция предобработки данных введенных пользователем
+        Функция предобработки данных введенных пользователем, подготовка пары
     '''
     
     user_prep = list(map(lambda x: x.upper(), filter(lambda x: x != ' ' or x != '', message.text.strip().split(' '))))    
@@ -184,7 +185,8 @@ def prep_pair(message) -> None:
 
 def convert(message, pair) -> None:
     '''
-        Функция непосредственной конвертации валюты    
+        Функция непосредственной конвертации валюты  
+        @pair: List[str] - 2-ух элементный массив с названиями валютных пар  
     '''
 
     try:
